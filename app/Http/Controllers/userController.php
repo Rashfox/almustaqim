@@ -245,6 +245,24 @@ class userController extends Controller{
         session(['otp_verified' => true]);
         return redirect('/resetpassword')->with('success', 'OTP Berhasil diverifikasi. Silakan buat password baru!');
     }
+    public function resetPassword(Request $request){
+        $email = session('email_reset');
+        $newpassword = $request->password;
+        if (!$email) {
+            return redirect('/login')->with('error', 'Sesi reset password telah berakhir.');
+        }
+        $admin = Admin::where('email', $email)->first();
+        if (!$admin) {
+            return redirect()->back()->with('error', 'Akun admin tidak ditemukan.');
+        }
+        if (Hash::check($newpassword, $admin->password)) {
+            return redirect()->back()->with('error', 'Password baru tidak boleh sama dengan password lama!');
+        }
+        $admin->password = Hash::make($newpassword);
+        $admin->save();
+        session()->forget('email_reset');
+        return redirect('/login')->with('success','Password anda telah direset');
+    }
     public function logout(Request $request){
         $request->session()->forget('username');
         $request->session()->forget('role');

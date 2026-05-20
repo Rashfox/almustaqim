@@ -127,18 +127,30 @@ class viewController extends Controller{
         return view('resetpassword');
     }
     public function EventTambah(){
+        if(session('username') == null){
+            return redirect('/login');
+        }
         return view('dashboard/tambahEvent');
     }
     public function EventEdit(Request $request){
+        if(session('username') == null){
+            return redirect('/login');
+        }
         $id = $request->id;
         $event = Event::where('id', $id)->get();
         return view('dashboard/editEvent',['event' => $event]);
     }
     public function profile(){
-        $admin = Admin::where('username', session('username'))->get();
+        if(session('username') == null){
+            return redirect('/login');
+        }
+        $admin = Admin::where('username', session('username'))->first();
         return view('dashboard/profile', ['admin' => $admin]);
     }
     public function user(){
+        if(session('username') == null){
+            return redirect('/login');
+        }
         $user = Admin::paginate(10);
         if (session('role') !== 'super admin') {
             return redirect('/dashboard')->with('error', 'Hak akses ditolak! Menu ini hanya untuk Super Admin.');
@@ -146,12 +158,18 @@ class viewController extends Controller{
         return view('dashboard/user', ['users'=> $user]);
     }
     public function tambahUser(){
+        if(session('username') == null){
+            return redirect('/login');
+        }
         if (session('role') !== 'super admin') {
             return redirect('/dashboard')->with('error', 'Hak akses ditolak! Menu ini hanya untuk Super Admin.');
         }
         return view('dashboard/tambahUser');
     }
     public function editUser(Request $request){
+        if(session('username') == null){
+            return redirect('/login');
+        }
         if (session('role') !== 'super admin') {
             return redirect('/dashboard')->with('error', 'Hak akses ditolak! Menu ini hanya untuk Super Admin.');
         }

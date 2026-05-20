@@ -15,6 +15,7 @@ Route::post('/forgot', [userController::class, 'forgot']);
 Route::get('/otp', [viewController::class,'otp']);
 Route::post('/otp', [userController::class,'verifyForgot']);
 Route::get('/resetpassword', [viewController::class,'resetPassword']);
+Route::post('/resetpassword', [userController::class,'resetPassword']);
 Route::get('/event/{id}', [viewController::class, 'detailEvent']);
 Route::get('/event/arsip/{tahun}/{bulan}', [viewController::class, 'arsipEvent']);
 
@@ -36,7 +37,7 @@ Route::prefix('/dashboard')->group(function(){
     Route::get('/event', [viewController::class, 'dashboardEvent']);
     Route::get('/event/tambah', [viewController::class, 'EventTambah']);
     Route::get('/event/edit/{id}', [viewController::class, 'EventEdit']);
-    Route::delete('/event/hapus/{event}', [prosesController::class, 'EventHapus']);
+    Route::delete('/event/delete/{event}', [prosesController::class, 'EventHapus']);
     Route::post('/event/update', [prosesController::class, 'EventUpdate']);
     Route::post('/event/simpan', [prosesController::class, 'EventSimpan']);
     Route::get('/profile', [viewController::class, 'profile']);

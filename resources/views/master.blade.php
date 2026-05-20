@@ -7,6 +7,7 @@
     <title>@yield('title', 'Majelis Al-Mustaqim')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <style>
@@ -39,6 +40,33 @@
         nav { display: flex; align-items: center; gap: 25px; }
         nav a { color: #fff; text-decoration: none; font-size: 16px; }
         .login-btn { background: none; border: none; color: white; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+
+        .global-alert-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            max-width: 350px;
+            width: 100%;
+        }
+        .floating-toast {
+            border-radius: 12px !important;
+            border: none !important;
+            animation: slideInRight 0.4s ease-outforward;
+            margin-bottom: 10px;
+        }
+
+        /* Animasi muncul dari kanan layar */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
 
         /* content event */
         .section-event {
@@ -176,14 +204,15 @@
         /* Footer */
         footer { color: #fff; padding: 10px 50px;}
         .footer-content {display: flex; justify-content: space-between;}
-        .footer-right { flex: 30%;}
+        .footer-right { flex: 40%; font-size: 16px;}
         .footer-text { font-size: 13px; }
         .kuning-ikon { color: #D4D925;}
-        .footer-join { flex: 20%; text-align: center; margin: auto;}
-        .footer-links { flex: 5%; margin-top: 50px; }
+        .footer-join { flex: 10%; text-align: center; margin: auto;}
+        .footer-links { flex: 5%; margin-top: 50px; font-size: 16px; margin-left: 2%;}
+        .footer-links h4 {font-size: 18px;}
         .footer-text { color: #fff;}
         .text-link, .footer-join h4,a{ color: #d9d9d9; text-decoration: none; font-size: 16px;}
-        li a { text-decoration: none; font-size: 16px}
+        li a { text-decoration: none; font-size: 16px;}
         .footer-links ul { list-style: none; padding: 0; font-size: 13px; }
         .footer-links li { margin-bottom: 8px; }
         .copyright { text-align: center; background-color: #282828; border-top: 1px solid rgba(255,255,255,0.1); padding: 10px 0; font-size: 12px; }
@@ -277,6 +306,49 @@
         </nav>
     </header>
 
+    {{-- KONTEN ALERT FLOATING GLOBAL --}}
+    <div class="global-alert-wrapper">
+        {{-- Alert Sukses --}}
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show floating-toast shadow-sm" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="bx bx-check-circle fs-4 me-2"></i>
+                    <div>{{ session('success') }}</div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        {{-- Alert Gagal / Eror --}}
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show floating-toast shadow-sm" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="bx bx-error-circle fs-4 me-2"></i>
+                    <div>{{ session('error') }}</div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        {{-- Alert Validasi Form --}}
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show floating-toast shadow-sm" role="alert">
+                <div class="d-flex align-items-start">
+                    <i class="bx bx-error-circle fs-4 me-2 mt-1"></i>
+                    <div>
+                        <strong class="d-block mb-1">Ada kesalahan:</strong>
+                        <ul class="mb-0 ps-3">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+    </div>
+
     @yield('content')
 
     <footer>
@@ -310,5 +382,24 @@
             &copy; 2026 UKM Majelis Al-Mustaqim. All rights reserved
         </div>
     </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Cari semua elemen dengan class .floating-toast
+        const alerts = document.querySelectorAll('.floating-toast');
+        
+        alerts.forEach(function(alertElement) {
+            // Jalankan fungsi setelah 3000ms (3 detik)
+            setTimeout(function() {
+                // Gunakan class bawaan Bootstrap untuk memicu animasi fade-out
+                alertElement.classList.remove('show');
+                
+                // Hapus elemen secara permanen dari HTML setelah animasi fade-out selesai (sekitar 150ms)
+                setTimeout(function() {
+                    alertElement.remove();
+                }, 150);
+            }, 3000); 
+        });
+    });
+</script>
 </body>
 </html>

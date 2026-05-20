@@ -117,7 +117,9 @@
         width: 100%;
         box-sizing: border-box;
     }
-
+    .form-control::placeholder{
+        color: #c4c4c4;
+    }
     .form-group-profile .form-control:focus {
         background-color: rgba(255, 255, 255, 0.03);
         border-color: #ebfb09; /* Warna kuning stabilo saat diklik */
@@ -156,6 +158,7 @@
         text-decoration: none;
         transition: background 0.2s;
         text-align: center;
+        cursor: pointer;
     }
 
     .btn-logout-prof:hover {
@@ -177,6 +180,72 @@
 
     .btn-simpan-prof:hover {
         background-color: #a3a6a9;
+    }
+
+    /* --- OVERLAY LOG OUT STYLE (SWEETALERT SIMPEL) --- */
+    .custom-overlay-logout {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        z-index: 99999;
+    }
+    .custom-overlay-logout.aktif {
+        display: block;
+    }
+    .box-confirm-logout {
+        max-width: 320px;
+        width: 85%;
+        margin: 15% auto;
+        background: #ffffff;
+        padding: 30px 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .overlay-icon-logout-warning {
+        width: 50px;
+        height: 50px;
+        border: 2px solid #facea8;
+        color: #f8bb86;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        margin: 0 auto 15px auto;
+        font-family: Arial, sans-serif;
+    }
+    .box-confirm-logout h4 {
+        font-size: 18px;
+        font-weight: 500;
+        color: #595959;
+        margin-bottom: 15px;
+    }
+    .btn-logout-ya {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn-logout-batal {
+        background-color: #3085d6;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 4px;
+        cursor: pointer;
     }
 
     /* --- RESPONSIVE ENGINE (Otomatis Atas-Bawah di HP) --- */
@@ -205,7 +274,8 @@
     <div class="container d-flex flex-column align-items-center">
         
         <div class="profile-greeting">
-            <h2>Hai, {{ $admin[0]->nama }}</h2>
+            {{-- Fix Bug Array Key 0 --}}
+            <h2>Hai, {{ $admin->nama }}</h2>
         </div>
 
         <div class="profile-card">
@@ -214,7 +284,7 @@
                 <div class="profile-avatar-wrapper">
                     <i class='bx bxs-user'></i>
                 </div>
-                <h3>{{ $admin[0]->nama }}</h3>
+                <h3>{{ $admin->nama }}</h3>
             </div>
 
             <div class="profile-right">
@@ -223,19 +293,19 @@
 
                     <div class="form-group-profile">
                         <label>Nama Lengkap</label>
-                        <input type="text" name="nama" class="form-control" value="{{ $admin[0]->nama }}" required autocomplete="off">
+                        <input type="text" name="nama" class="form-control" value="{{ $admin->nama }}" required autocomplete="off">
                         <i class='bx bxs-pencil icon-edit-input'></i>
                     </div>
 
                     <div class="form-group-profile">
                         <label>Username</label>
-                        <input type="text" name="username" class="form-control" value="{{ $admin[0]->username }}" required autocomplete="off">
+                        <input type="text" name="username" class="form-control" value="{{ $admin->username }}" required autocomplete="off">
                         <i class='bx bxs-pencil icon-edit-input'></i>
                     </div>
 
                     <div class="form-group-profile">
                         <label>Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ $admin[0]->email }}" readonly>
+                        <input type="email" name="email" class="form-control" value="{{ $admin->email }}" readonly>
                     </div>
 
                     <div class="form-group-profile">
@@ -245,7 +315,8 @@
                     </div>
 
                     <div class="btn-profile-action">
-                        <a href="{{ url('/logout') }}" class="btn-logout-prof">Log Out</a>
+                        {{-- Tombol Log out bertipe button pemicu overlay JS --}}
+                        <button type="button" id="triggerLogOut" class="btn-logout-prof">Log Out</button>
                         <button type="submit" class="btn-simpan-prof">Simpan</button>
                     </div>
                 </form>
@@ -254,4 +325,63 @@
         </div>
     </div>
 </div>
+
+{{-- HTML CUSTOM OVERLAY CONFIRMATION LOG OUT --}}
+<div id="overlayLogOut" class="custom-overlay-logout">
+    <div class="box-confirm-logout">
+        <div class="overlay-icon-logout-warning">!</div>
+        <h4>Yakin ingin keluar?</h4>
+        
+        <div class="d-flex gap-2 justify-content-center">
+            <button type="button" id="btnYesLogOut" class="btn-logout-ya">Ya</button>
+            <button type="button" id="btnCancelLogOut" class="btn-logout-batal">Batal</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const overlay = document.getElementById('overlayLogOut');
+        const triggerBtn = document.getElementById('triggerLogOut');
+        const cancelBtn = document.getElementById('btnCancelLogOut');
+        const yesBtn = document.getElementById('btnYesLogOut');
+
+        // Buka Overlay Konfirmasi
+        triggerBtn.addEventListener('click', function() {
+            overlay.classList.add('aktif');
+        });
+
+        // Tutup saat Batal
+        cancelBtn.addEventListener('click', function() {
+            overlay.classList.remove('aktif');
+        });
+
+        // Tutup saat Klik di luar area putih
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                overlay.classList.remove('aktif');
+            }
+        });
+
+        // Eksekusi Log Out Menggunakan Form POST Virtual agar aman secara standarisasi Laravel
+        yesBtn.addEventListener('click', function() {
+            overlay.classList.remove('aktif');
+
+            const logoutForm = document.createElement('form');
+            logoutForm.method = 'POST';
+            logoutForm.action = "{{ url('/logout') }}";
+            logoutForm.style.display = 'none';
+
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = "{{ csrf_token() }}";
+
+            logoutForm.appendChild(csrfToken);
+            document.body.appendChild(logoutForm);
+            
+            logoutForm.submit();
+        });
+    });
+</script>
 @endsection

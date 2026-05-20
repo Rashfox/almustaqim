@@ -50,20 +50,6 @@
     .tabel-kotak tbody tr:hover {
         background-color: #f8fafc;
     }
-    .badge-role {
-        background-color: #e2e8f0;
-        color: #4a5568;
-        padding: 5px 10px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        border-radius: 4px;
-        display: inline-block;
-    }
-    .badge-admin {
-        background-color: #d1e7dd;
-        color: #0f5132;
-    }
     .table-responsive {
         width: 100%;
         margin-bottom: 20px;
@@ -101,24 +87,87 @@
     .btn-aksi-hapus { background-color: #dc3545; color: white; border: 1px solid #dc3545; }
     .btn-aksi-hapus:hover { background-color: #bb2d3b; color: white; }
 
-    .user-avatar-circle {
+    .custom-overlay-hapus {
         display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        z-index: 99999;
     }
-    .mobile-card-list {
-        display: none;
+
+    .custom-overlay-hapus.aktif {
+        display: block;
     }
+
+    .box-confirm-hapus {
+        max-width: 320px;
+        width: 85%;
+        margin: 15% auto;
+        background: #ffffff;
+        padding: 30px 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .overlay-icon-warning {
+        width: 50px;
+        height: 50px;
+        border: 2px solid #facea8;
+        color: #f8bb86;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        margin: 0 auto 15px auto;
+    }
+
+    .box-confirm-hapus h4 {
+        font-size: 18px;
+        font-weight: 500;
+        color: #595959;
+        margin-bottom: 5px;
+    }
+
+    .btn-confirm-ya {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-confirm-batal {
+        background-color: #3085d6;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .user-avatar-circle { display: none; }
+    .mobile-card-list { display: none; }
     .pagination-custom-wrapper {
         display: flex;
         justify-content: center;
         margin-top: 25px;
         width: 100%;
     }
-    .pagination-custom-wrapper nav {
-        display: inline-flex;
-        gap: 6px;
-    }
-    .pagination-custom-wrapper nav a,
-    .pagination-custom-wrapper nav span {
+    .pagination-custom-wrapper nav { display: inline-flex; gap: 6px; }
+    .pagination-custom-wrapper nav a, .pagination-custom-wrapper nav span {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -132,32 +181,14 @@
         text-decoration: none;
         transition: all 0.2s;
     }
-    .pagination-custom-wrapper nav a:hover {
-        background-color: #f8fafc;
-        color: #198754;
-        border-color: #198754;
-    }
-    .pagination-custom-wrapper nav .page-info {
-        background-color: #f8fafc;
-        color: #718096;
-        cursor: default;
-    }
-    .pagination-custom-wrapper nav .disabled {
-        color: #a0aec0;
-        background-color: #f1f5f9;
-        border-color: #e2e8f0;
-        cursor: not-allowed;
-    }
+    .pagination-custom-wrapper nav a:hover { background-color: #f8fafc; color: #198754; border-color: #198754; }
+    .pagination-custom-wrapper nav .page-info { background-color: #f8fafc; color: #718096; cursor: default; }
+    .pagination-custom-wrapper nav .disabled { color: #a0aec0; background-color: #f1f5f9; border-color: #e2e8f0; cursor: not-allowed; }
 
-    /* --- BREAKPOINT RESPONSIVE LAYAR --- */
     @media (max-width: 991px) { 
         .section-list-user { padding: 20px 10px; }
         .card-tabel-kotak { padding: 25px 20px; }   
-        .d-flex.justify-content-between.align-items-center {
-            flex-direction: column;
-            align-items: flex-start !important;
-            gap: 15px;
-        }
+        .d-flex.justify-content-between.align-items-center { flex-direction: column; align-items: flex-start !important; gap: 15px; }
         .btn-aksi-tambah { width: 100%; justify-content: center; margin-bottom: 10px; }
         .pagination-custom-wrapper nav a, .pagination-custom-wrapper nav span { padding: 8px 12px; font-size: 0.75rem; }
     }
@@ -173,15 +204,7 @@
     @media (max-width: 576px) {
         .table-responsive { display: none; }
         .mobile-card-list { display: flex; flex-direction: column; gap: 15px; margin-bottom: 20px; width: 100%; }
-        .mobile-user-card {
-            background-color: #ffffff;
-            border: 1px solid #e2e8f0;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+        .mobile-user-card { background-color: #ffffff; border: 1px solid #e2e8f0; padding: 15px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .mobile-user-header { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px; }
         .mobile-user-info { display: flex; flex-direction: column; gap: 4px; }
         .mobile-user-name { font-size: 1rem; font-weight: 700; color: #2d3748; }
@@ -221,11 +244,7 @@
                         @foreach($users as $u)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td class="fw-semibold text-dark">
-                                <div class="d-flex align-items-center gap-2">
-                                    <p>{{ $u->nama }}</p>
-                                </div>
-                            </td>
+                            <td class="fw-semibold text-dark">{{ $u->nama }}</td>
                             <td>{{ $u->username }}</td>
                             <td>{{ $u->email }}</td>
                             <td style="text-align: center;">
@@ -233,9 +252,12 @@
                                     <a href="/dashboard/user/edit/{{ $u->id }}" class="btn-kotak-aksi btn-aksi-edit" title="Edit User">
                                         <i class="bx bx-edit fs-6 me-1"></i> Edit
                                     </a>
-                                    <a href="/dashboard/user/delete/{{ $u->id }}" class="btn-kotak-aksi btn-aksi-hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')" title="Hapus User">
+                                    <button type="button" class="btn-kotak-aksi btn-aksi-hapus btnTriggerHapus" 
+                                            data-id="{{ $u->id }}" 
+                                            data-nama="{{ $u->nama }}" 
+                                            title="Hapus User" style="border: none;">
                                         <i class="bx bx-trash fs-6 me-1"></i> Hapus
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -251,15 +273,15 @@
             </table>
         </div>
 
+        {{-- CARD VIEW (MOBILE) --}}
         <div class="mobile-card-list">
             @if(count($users) > 0)
                 @foreach($users as $u)
                     <div class="mobile-user-card">
                         <div class="mobile-user-header">
-                            <div class="user-avatar-circle"><i class='bx bx-user'></i></div>
                             <div class="mobile-user-info">
                                 <span class="mobile-user-name">{{ $u->nama }}</span>
-                                <span class="text-muted" style="font-size: 0.8rem;">@ {{ $u->username }}</span>
+                                <span class="text-muted" style="font-size: 0.8rem;">@ {{ $u->username }}</span>
                             </div>
                         </div>
                         
@@ -271,9 +293,12 @@
                             <a href="/dashboard/user/edit/{{ $u->id }}" class="btn-kotak-aksi btn-aksi-edit">
                                 <i class="bx bx-edit me-1"></i> Edit
                             </a>
-                            <a href="/dashboard/user/hapus/{{ $u->id }}" class="btn-kotak-aksi btn-aksi-hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')">
+                            <button type="button" class="btn-kotak-aksi btn-aksi-hapus btnTriggerHapus" 
+                                    data-id="{{ $u->id }}" 
+                                    data-nama="{{ $u->nama }}" 
+                                    style="border: none;">
                                 <i class="bx bx-trash me-1"></i> Hapus
-                            </a>
+                            </button>
                         </div>
                     </div>
                 @endforeach
@@ -284,6 +309,7 @@
             @endif
         </div>
 
+        {{-- PAGINATION --}}
         <div class="pagination-custom-wrapper">
             <nav>
                 @if ($users->onFirstPage())
@@ -311,6 +337,19 @@
     </div>
 </div>
 
+<div id="customOverlayHapus" class="custom-overlay-hapus">
+    <div class="box-confirm-hapus">
+        <div class="overlay-icon-warning">!</div>
+        <h4>Yakin hapus data?</h4>
+        <p id="overlayNamaUser" class="text-muted small mb-4" style="font-size: 14px; margin-top: 5px;"></p>
+        
+        <div class="d-flex gap-2 justify-content-center">
+            <button type="button" id="btnYesHapus" class="btn-confirm-ya">Ya</button>
+            <button type="button" id="btnCancelHapus" class="btn-confirm-batal">Batal</button>
+        </div>
+    </div>
+</div>
+
 <script>
     (function() {
         const targetPerPage = window.innerWidth < 768 ? 3 : 5;
@@ -329,6 +368,63 @@
             urlParams.set('per_page', targetPerPage);
             window.location.search = urlParams.toString();
         }
+
+        const overlay = document.getElementById('customOverlayHapus');
+        const overlayNama = document.getElementById('overlayNamaUser');
+        const btnCancel = document.getElementById('btnCancelHapus');
+        const btnYes = document.getElementById('btnYesHapus');
+        let targetIdHapus = null;
+
+        document.querySelectorAll('.btnTriggerHapus').forEach(button => {
+            button.addEventListener('click', function() {
+                targetIdHapus = this.getAttribute('data-id');
+                const namaUser = this.getAttribute('data-nama');
+
+                overlayNama.textContent = `User: ${namaUser}`;
+                overlay.classList.add('aktif');
+            });
+        });
+
+        // Tutup saat klik Batal
+        btnCancel.addEventListener('click', function() {
+            overlay.classList.remove('aktif');
+        });
+
+        // Tutup saat klik area hitam di luar box
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                overlay.classList.remove('aktif');
+            }
+        });
+
+        // Eksekusi "Ya" dengan Form Virtual Method DELETE Laravel
+        btnYes.addEventListener('click', function() {
+            if (targetIdHapus) {
+                overlay.classList.remove('aktif');
+
+                const form = document.createElement('form');
+                form.method = 'POST';
+                // Diarahkan ke routing delete user milikmu
+                form.action = `/dashboard/user/delete/${targetIdHapus}`;
+                form.style.display = 'none';
+
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = "{{ csrf_token() }}";
+
+                const methodInput = document.createElement('input');
+                methodInput.type = 'hidden';
+                methodInput.name = '_method';
+                methodInput.value = 'DELETE';
+
+                form.appendChild(csrfInput);
+                form.appendChild(methodInput);
+                document.body.appendChild(form);
+                
+                form.submit();
+            }
+        });
     })();
 </script>
 @endsection

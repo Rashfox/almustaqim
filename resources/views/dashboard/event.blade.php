@@ -99,6 +99,76 @@
     .btn-aksi-hapus { background-color: #dc3545; color: white; border: 1px solid #dc3545; }
     .btn-aksi-hapus:hover { background-color: #bb2d3b; color: white; }
 
+    .custom-overlay-hapus {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        z-index: 99999;
+    }
+
+    .custom-overlay-hapus.aktif {
+        display: block;
+    }
+    .box-confirm-hapus {
+        max-width: 320px;
+        width: 85%;
+        margin: 15% auto;
+        background: #ffffff;
+        padding: 30px 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .overlay-icon-warning {
+        width: 50px;
+        height: 50px;
+        border: 2px solid #facea8;
+        color: #f8bb86;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        margin: 0 auto 15px auto;
+    }
+
+    .box-confirm-hapus h4 {
+        font-size: 18px;
+        font-weight: 500;
+        color: #595959;
+        margin-bottom: 5px;
+    }
+
+    /* Tombol Aksi */
+    .btn-confirm-ya {
+        background-color: #dc3545; /* Merah */
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-confirm-batal {
+        background-color: #3085d6; /* Biru */
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
     .img-thumb-event {
         width: 80px;
         height: 55px;
@@ -356,13 +426,25 @@
                                     <a href="/dashboard/event/edit/{{ $e->id }}" class="btn-kotak-aksi btn-aksi-edit" title="Edit Data">
                                         <i class="bx bx-edit fs-6 me-1"></i> Edit
                                     </a>
-                                    <a href="/dashboard/event/hapus/{{ $e->id }}" class="btn-kotak-aksi btn-aksi-hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus kegiatan ini?')" title="Hapus Data">
-                                        <i class="bx bx-trash fs-6 me-1"></i> Hapus
-                                    </a>
+                                    <button type="button" class="btn-kotak-aksi btn-aksi-hapus btnTriggerHapus" data-id="{{ $e->id }}" data-nama="{{ $e->nama }}" style="border:none;">
+                                        <i class="bx bx-trash me-1"></i> Hapus
+                                    </button>
                                 </div>
                             </td>
                         </tr>
                         @endforeach
+                        <div id="customOverlayHapus" class="custom-overlay-hapus">
+                            <div class="box-confirm-hapus">
+                                <div class="overlay-icon-warning">!</div>
+                                <h4>Yakin hapus data?</h4>
+                                <p id="overlayNamaEvent" class="text-muted small mb-4"></p>
+                                
+                                <div class="d-flex gap-2 justify-content-center">
+                                    <button type="button" id="btnYesHapus" class="btn-confirm-ya">Ya</button>
+                                    <button type="button" id="btnCancelHapus" class="btn-confirm-batal">Batal</button>
+                                </div>
+                            </div>
+                        </div>
                     @else
                         <tr>
                             <td colspan="5" style="text-align: center; padding: 30px;" class="text-muted">
@@ -397,9 +479,9 @@
                                 <a href="/dashboard/event/edit/{{ $e->id }}" class="btn-kotak-aksi btn-aksi-edit">
                                     <i class="bx bx-edit me-1"></i> Edit
                                 </a>
-                                <a href="/dashboard/event/hapus/{{ $e->id }}" class="btn-kotak-aksi btn-aksi-hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus kegiatan ini?')">
+                                <button type="button" class="btn-kotak-aksi btn-aksi-hapus btnTriggerHapus" data-id="{{ $e->id }}" data-nama="{{ $e->nama }}" style="border:none;">
                                     <i class="bx bx-trash me-1"></i> Hapus
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -456,6 +538,59 @@
             }
             window.location.search = urlParams.toString();
         }
+        const overlay = document.getElementById('customOverlayHapus');
+        const overlayNama = document.getElementById('overlayNamaEvent');
+        const btnCancel = document.getElementById('btnCancelHapus');
+        const btnYes = document.getElementById('btnYesHapus');
+        let targetIdHapus = null;
+
+        // Buka alert saat tombol hapus diklik
+        document.querySelectorAll('.btnTriggerHapus').forEach(button => {
+            button.addEventListener('click', function() {
+                targetIdHapus = this.getAttribute('data-id');
+                const namaEvent = this.getAttribute('data-nama');
+
+                overlayNama.textContent = `Kegiatan: ${namaEvent}`;
+                overlay.classList.add('aktif');
+            });
+        });
+
+        // Tutup jika klik batal
+        btnCancel.addEventListener('click', function() {
+            overlay.classList.remove('aktif');
+        });
+
+        // Tutup jika klik di area hitam/luar kotak putih
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) overlay.classList.remove('aktif');
+        });
+
+        // Jika klik "Ya" -> Jalankan form virtual method DELETE Laravel
+        btnYes.addEventListener('click', function() {
+            if (targetIdHapus) {
+                overlay.classList.remove('aktif');
+
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/dashboard/event/delete/${targetIdHapus}`;
+                form.style.display = 'none';
+
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = "{{ csrf_token() }}";
+
+                const methodInput = document.createElement('input');
+                methodInput.type = 'hidden';
+                methodInput.name = '_method';
+                methodInput.value = 'DELETE';
+
+                form.appendChild(csrfInput);
+                form.appendChild(methodInput);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
     });
 </script>
 @endsection
