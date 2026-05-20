@@ -120,6 +120,12 @@ class viewController extends Controller{
     public function forgot(){
         return view('forgot');
     }
+    public function otp(){
+        return view('otp');
+    } 
+    public function resetpassword(){
+        return view('resetpassword');
+    }
     public function EventTambah(){
         return view('dashboard/tambahEvent');
     }

@@ -12,6 +12,9 @@ Route::get('/about', [viewController::class, 'about']);
 Route::get('/contact',[viewController::class, 'contact']);
 Route::get('/forgot', [viewController::class, 'forgot']);
 Route::post('/forgot', [userController::class, 'forgot']);
+Route::get('/otp', [viewController::class,'otp']);
+Route::post('/otp', [userController::class,'verifyForgot']);
+Route::get('/resetpassword', [viewController::class,'resetPassword']);
 Route::get('/event/{id}', [viewController::class, 'detailEvent']);
 Route::get('/event/arsip/{tahun}/{bulan}', [viewController::class, 'arsipEvent']);
 

@@ -219,13 +219,31 @@ class userController extends Controller{
         if ($admin){
             $kirimEmail = $this->sendOTP($email, $admin);
             if ($kirimEmail) {
-                return redirect('/verify-otp')->with('success', 'Kode OTP telah dikirim ke email anda!');
+                return redirect('/otp')->with('success', 'Kode OTP telah dikirim ke email anda!');
             } else {
                 return redirect()->back()->with('error', 'Gagal mengirim email OTP. Coba lagi nanti.');
             }
         } else {
             return redirect('/forgot')->with('error', 'Alamat email tidak terdaftar!');
         }
+    }
+    public function verifyForgot(Request $request){
+        $request->validate([
+            'otp' => 'required|numeric'
+        ]);
+        $email = session('email_reset');
+        $otp = $request->otp;
+        $kodeOtp = KodeOtp::where('email', $email)
+                        ->where('otp', $otp)
+                        ->where('action', 'forgot_password')
+                        ->where('expires_at', '>', now())
+                        ->first();
+        if (!$kodeOtp) {
+            return redirect()->back()->with('error', 'Kode OTP tidak valid atau sudah kadaluarsa!');
+        }
+        $kodeOtp->delete();
+        session(['otp_verified' => true]);
+        return redirect('/resetpassword')->with('success', 'OTP Berhasil diverifikasi. Silakan buat password baru!');
     }
     public function logout(Request $request){
         $request->session()->forget('username');
