@@ -451,19 +451,16 @@
                     overlay.classList.add('aktif');
                 });
 
-                // Tutup saat tombol Batal di klik
                 cancelBtn.addEventListener('click', function() {
                     overlay.classList.remove('aktif');
                 });
 
-                // Tutup otomatis jika admin mengklik area hitam blur di luar box putih
                 overlay.addEventListener('click', function(e) {
                     if (e.target === overlay) {
                         overlay.classList.remove('aktif');
                     }
                 });
 
-                // Eksekusi Submit Form POST Virtual saat mengklik "Ya" demi standard keamanan Laravel
                 yesBtn.addEventListener('click', function() {
                     overlay.classList.remove('aktif');
 
