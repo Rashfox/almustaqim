@@ -445,7 +445,6 @@
             const yesBtn = document.getElementById('masterBtnYesLogOut');
 
             if(triggerBtn && overlay) {
-                // Buka overlay konfirmasi saat tombol Logout di klik
                 triggerBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     overlay.classList.add('aktif');
@@ -465,7 +464,7 @@
                     overlay.classList.remove('aktif');
 
                     const form = document.createElement('form');
-                    form.method = 'POST';
+                    form.method = 'post';
                     form.action = "{{ url('/logout') }}";
                     form.style.display = 'none';
 

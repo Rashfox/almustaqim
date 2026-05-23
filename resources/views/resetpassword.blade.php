@@ -168,7 +168,7 @@
             <div class="form-group">
                 <label>Password Baru</label>
                 <div class="input-password-wrapper">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Kosongkan jika tidak ingin diubah">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Masukan Pasword Baru">
                     <button class="btn-toggle-eye" type="button" id="togglePassword">
                         <i class="bx bx-show fs-4" id="eyeIcon"></i>
                     </button>

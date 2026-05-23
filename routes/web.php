@@ -25,7 +25,7 @@ Route::get('/verify/{token}', [userController::class, 'verify']);
 // login admin
 Route::get('/login', [viewController::class, 'login']);
 Route::post('/login', [userController::class, 'login']);
-Route::get('/logout', [userController::class, 'logout']);
+Route::post('/logout', [userController::class, 'logout']);
 Route::prefix('/dashboard')->group(function(){
     Route::get('/', [viewController::class, 'dashboard']);
     Route::get('/user', [viewController::class, 'user']);
@@ -33,7 +33,7 @@ Route::prefix('/dashboard')->group(function(){
     Route::get('/user/edit/{id}', [viewController::class, 'editUser']);
     Route::post('/user/simpan', [userController::class,'addUser']);
     Route::post('/user/update/{id}', [userController::class,'updateUser']);
-    Route::get('/user/delete/{id}', [userController::class,'deleteUser']);
+    Route::delete('/user/delete/{id}', [userController::class,'deleteUser']);
     Route::get('/event', [viewController::class, 'dashboardEvent']);
     Route::get('/event/tambah', [viewController::class, 'EventTambah']);
     Route::get('/event/edit/{id}', [viewController::class, 'EventEdit']);

@@ -346,24 +346,20 @@
         const cancelBtn = document.getElementById('btnCancelLogOut');
         const yesBtn = document.getElementById('btnYesLogOut');
 
-        // Buka Overlay Konfirmasi
         triggerBtn.addEventListener('click', function() {
             overlay.classList.add('aktif');
         });
 
-        // Tutup saat Batal
         cancelBtn.addEventListener('click', function() {
             overlay.classList.remove('aktif');
         });
 
-        // Tutup saat Klik di luar area putih
         overlay.addEventListener('click', function(e) {
             if (e.target === overlay) {
                 overlay.classList.remove('aktif');
             }
         });
 
-        // Eksekusi Log Out Menggunakan Form POST Virtual agar aman secara standarisasi Laravel
         yesBtn.addEventListener('click', function() {
             overlay.classList.remove('aktif');
 

@@ -97,20 +97,17 @@
         display: block;
     }
 
-    /* Isi Teks Deskripsi / Dokumentasi Cerita */
     .article-content {
         font-family: 'Inria Serif', serif;
         font-size: 16px;
-        line-height: 1.8; /* Dibuat agak renggang biar enak dibaca */
+        line-height: 1.8; 
         color: #334155;
         text-align: justify;
     }
-
-    /* Break kata jika ada teks/link yang terlalu panjang */
     .article-content p {
         margin-top: 0;
         margin-bottom: 20px;
-        white-space: pre-line; /* Menjaga spasi enter baris baru dari database */
+        white-space: pre-line; 
     }
 
     /* --- RESPONSIVITAS MOBILE --- */
@@ -143,7 +140,7 @@
     <div class="article-container">
         
         <div class="btn-back-wrapper">
-            <a href="/event" class="btn-kembali">
+            <a href="{{ url()->previous() }}" class="btn-kembali">
                 <i class='bx bx-left-arrow-alt fs-4 align-middle'></i> Kembali ke Event
             </a>
         </div>

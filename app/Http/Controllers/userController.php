@@ -15,14 +15,26 @@ class userController extends Controller{
         $password = $request->password;
         $remember = $request->remember;
         $admin = Admin::where('username', $username)->first();
+        $email = Admin::where('email', $username)->first();
         if ($admin && Hash::check($password, $admin->password)){
             if ($admin->email_verified_at == null) {
                 return redirect('/login')->with('error', 'Akun Anda belum diaktivasi! Silakan cek email Anda untuk melakukan verifikasi.');
             }
-            session(['username' => $username,'role' => $admin->role]);
+            session(['username' => $admin->username,'role' => $admin->role]);
             $request->session()->regenerate();
             if ($remember){
-                Cookie::queue('remember_username', $username, 4320); // 3 hari
+                Cookie::queue('remember_username', $admin->username, 4320); // 3 hari
+            }
+            return redirect('/dashboard');
+        }
+        else if ($email && Hash::check($password, $email->password)){
+            if ($email->email_verified_at == null) {
+                return redirect('/login')->with('error', 'Akun Anda belum diaktivasi! Silakan cek email Anda untuk melakukan verifikasi.');
+            }
+            session(['username' => $email->username,'role' => $email->role]);
+            $request->session()->regenerate();
+            if ($remember){
+                Cookie::queue('remember_username', $email->username, 4320); 
             }
             return redirect('/dashboard');
         }else {
@@ -271,6 +283,9 @@ class userController extends Controller{
         $request->session()->regenerateToken();
         if (Cookie::has('remember_username')) {
             Cookie::queue(Cookie::forget('remember_username'));
+        }
+        if (Cookie::has('remember_email')) {
+            Cookie::queue(Cookie::forget('remember_email'));
         }
         return redirect('/');
     }
