@@ -335,11 +335,11 @@
             </a>
         </div>
         <nav>
-            <a href="/dashboard">Home</a>
-            <a href="/dashboard/event">Event</a>
+            <a href="/dashboard">Dashboard</a>
             @if(session('role') === 'super admin')
-                <a href="/dashboard/user"><i class='bx bx-group align-middle me-1'></i> Kelola User</a>
+            <a href="/dashboard/user"><i class='bx bx-group align-middle me-1'></i> Kelola User</a>
             @endif
+            <a href="/dashboard/event">Event</a>
             <a href="/dashboard/profile"><i class='bx bxs-user-circle align-middle me-1'></i> {{ session('username') }}</a>
             <a href="javascript:void(0);" id="navTriggerLogOut" style="color: #ffc107;"><i class='bx bx-log-out align-middle me-1'></i> Logout</a>
         </nav>
