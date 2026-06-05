@@ -181,6 +181,7 @@
                     <div class="form-group-kotak">
                         <label for="gambar">Ganti Gambar (Opsional) :</label>
                         <input type="file" class="form-control" id="gambar" name="gambar" accept="image/*">
+                        <small id="error-gambar" style="color: #dc3545; font-weight: 600; display: none; margin-top: 5px;"></small>
                     </div>
 
                     <div class="form-group-kotak">
@@ -227,12 +228,22 @@
     // --- JAVASCRIPT LIVE PREVIEW GAMBAR EDIT ---
     const gambarInput = document.getElementById('gambar');
     const imgPreview = document.getElementById('imgPreview');
+    const errorGambar = document.getElementById('error-gambar');
     // Menyimpan URL gambar lama bawaan DB
     const gambarLama = "{{ asset('img/'.$event[0]->gambar) }}";
 
     gambarInput.addEventListener('change', function() {
         const file = this.files[0];
         if (file) {
+            const ukuranMaksimal = 2 * 1024 * 1024;
+            if (file.size > ukuranMaksimal) {
+                errorGambar.textContent = "Ukuran gambar terlalu besar. Maksimal 2MB.";
+                errorGambar.style.display = "block";
+                this.value = "";
+                imgPreview.setAttribute('src', gambarLama);
+                return;
+            }
+            errorGambar.style.display = "none";
             const reader = new FileReader();
             
             reader.addEventListener('load', function() {
@@ -241,7 +252,7 @@
             
             reader.readAsDataURL(file);
         } else {
-            // Jika user membatalkan pilihan file baru, kembalikan tampilannya ke gambar lama
+            errorGambar.style.display = "none";
             imgPreview.setAttribute('src', gambarLama);
         }
     });

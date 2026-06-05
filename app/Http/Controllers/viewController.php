@@ -29,8 +29,9 @@ class viewController extends Controller{
 
         return view('event', compact('event', 'arsipBulan'));
     }
-    public function detailEvent($id){
-        $event = Event::findOrFail($id);
+    public function detailEvent($id_with_slug){
+        $event = Event::findOrFail($id_with_slug);
+        $id = $event->id;
         $admin = Event::join('admin', 'event.admin_id', '=', 'admin.id')
         ->select('admin.nama as nama_penulis')->where('event.id', $id)->first();
 

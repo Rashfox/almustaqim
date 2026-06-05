@@ -16,7 +16,7 @@ Route::get('/otp', [viewController::class,'otp']);
 Route::post('/otp', [userController::class,'verifyForgot']);
 Route::get('/resetpassword', [viewController::class,'resetPassword']);
 Route::post('/resetpassword', [userController::class,'resetPassword']);
-Route::get('/event/{id}', [viewController::class, 'detailEvent']);
+Route::get('/event/{id_with_slug}', [viewController::class, 'detailEvent'])->name('kegiatan.detail');
 Route::get('/event/arsip/{tahun}/{bulan}', [viewController::class, 'arsipEvent']);
 
 // otp

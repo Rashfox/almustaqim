@@ -280,7 +280,7 @@
                     @if($loop->first && $event->onFirstPage())
                         <div class="spotlight-card">
                             <div class="event-image-wrapper">
-                                <a href="/event/{{ $e->id }}">
+                                <a href="{{ route('kegiatan.detail', $e->id . '-' . Str::slug($e->nama)) }}">
                                     <img src="{{ asset('img/'.$e->gambar) }}" alt="{{ $e->nama }}">
                                 </a>
                             </div>
@@ -294,7 +294,7 @@
                                     </div>
                                 </div>
                                 
-                                <a href="/event/{{ $e->id }}" class="event-title-link">
+                                <a href="{{ route('kegiatan.detail', $e->id . '-' . Str::slug($e->nama)) }}" class="event-title-link">
                                     <h3 class="event-title">{{ $e->nama }}</h3>
                                 </a>
                                 
@@ -304,7 +304,7 @@
                                     </div>
                                 </div>
 
-                                <a href="/event/{{ $e->id }}" class="btn-baca-detail">
+                                <a href="{{ route('kegiatan.detail', $e->id . '-' . Str::slug($e->nama)) }}" class="btn-baca-detail">
                                     Baca Selengkapnya <i class='bx bx-right-arrow-alt align-middle fs-5'></i>
                                 </a>
                             </div>
@@ -312,7 +312,7 @@
                     @else
                         <div class="event-card">
                             <div class="event-image-wrapper">
-                                <a href="/event/{{ $e->id }}" class="event-title-link">
+                                <a href="{{ route('kegiatan.detail', $e->id . '-' . Str::slug($e->nama)) }}" class="event-title-link">
                                     <img src="{{ asset('img/'.$e->gambar) }}" alt="{{ $e->nama }}">
                                 </a>
                             </div>
@@ -326,7 +326,7 @@
                                     </div>
                                 </div>
                                 
-                                <a href="/event/{{ $e->id }}" class="event-title-link">
+                                <a href="{{ route('kegiatan.detail', $e->id . '-' . Str::slug($e->nama)) }}" class="event-title-link">
                                     <h3 class="event-title">{{ $e->nama }}</h3>
                                 </a>
                                 
@@ -336,7 +336,7 @@
                                     </div>
                                 </div>
 
-                                <a href="/event/{{ $e->id }}" class="btn-baca-detail">
+                                <a href="{{ route('kegiatan.detail', $e->id . '-' . Str::slug($e->nama)) }}" class="btn-baca-detail">
                                     Selengkapnya <i class='bx bx-right-arrow-alt align-middle fs-5'></i>
                                 </a>
                             </div>

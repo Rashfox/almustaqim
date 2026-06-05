@@ -65,11 +65,20 @@
 
                     <div class="form-group-kotak">
                         <label for="role">Hak Akses / Role</label>
+                        @if ($user->id == 1)
+                        <select class="form-control form-select" id="role" name="role" disabled style="border-radius: 0px !important; height: 48px;">
+                            <option value="" disabled>-- Pilih Role Akses --</option>
+                            <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="super admin" {{ old('role', $user->role) == 'super admin' ? 'selected' : '' }}>Super Admin</option>
+                        </select>
+                        <input type="hidden" name="role" value="{{ $user->role }}">
+                        @else
                         <select class="form-control form-select" id="role" name="role" required style="border-radius: 0px !important; height: 48px;">
                             <option value="" disabled>-- Pilih Role Akses --</option>
                             <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
                             <option value="super admin" {{ old('role', $user->role) == 'super admin' ? 'selected' : '' }}>Super Admin</option>
                         </select>
+                        @endif
                     </div>
                 </div>
 

@@ -160,7 +160,7 @@
                 @foreach($eventArsip as $e)
                     <div class="event-card">
                         <div class="event-image-wrapper">
-                            <a href="/event/{{ $e->id }}">
+                            <a href="{{ route('kegiatan.detail', $e->id . '-' . Str::slug($e->nama)) }}">
                                 <img src="{{ asset('img/'.$e->gambar) }}" alt="{{ $e->nama }}">
                             </a>
                         </div>
@@ -170,12 +170,12 @@
                                 {{ \Carbon\Carbon::parse($e->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }}
                             </div>
                             <h3 class="event-title">
-                                <a href="/event/{{ $e->id }}">{{ $e->nama }}</a>
+                                <a href="{{ route('kegiatan.detail', $e->id . '-' . Str::slug($e->nama)) }}">{{ $e->nama }}</a>
                             </h3>
                             <div class="event-desc">
                                 {{ $e->deskripsi }}
                             </div>
-                            <a href="/event/{{ $e->id }}" class="btn-detail">Selengkapnya →</a>
+                            <a href="{{ route('kegiatan.detail', $e->id . '-' . Str::slug($e->nama)) }}" class="btn-detail">Selengkapnya →</a>
                         </div>
                     </div>
                 @endforeach
