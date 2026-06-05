@@ -1,6 +1,6 @@
 @extends('master')
 
-@section('title', 'Home - Majelis Al-Mustaqim')
+@section('title', 'Majelis Al-Mustaqim')
 
 @section('content')
 <style>
