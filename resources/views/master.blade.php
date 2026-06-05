@@ -302,7 +302,11 @@
             <a href="/event">Event</a>
             <a href="/about">About</a>
             <a href="/contact">Contact</a>
-            <div class="login-btn"><a href="/login"><i class='bx bxs-user'></i> Login</a></div>
+            @if (session('username'))
+                <div class="login-btn"><a href="/dashboard">Dashboard</a></div>
+            @else
+                <div class="login-btn"><a href="/login"><i class='bx bxs-user'></i> Login</a></div>
+            @endif
         </nav>
     </header>
 

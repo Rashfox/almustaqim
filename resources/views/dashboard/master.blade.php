@@ -335,6 +335,7 @@
             </a>
         </div>
         <nav>
+            <a href="/">Home</a>
             <a href="/dashboard">Dashboard</a>
             @if(session('role') === 'super admin')
             <a href="/dashboard/user"><i class='bx bx-group align-middle me-1'></i> Kelola User</a>
