@@ -328,7 +328,7 @@
     <header>
         <div class="logo-section">
             <a href="/dashboard">
-                <img src="https://idweb.tech/api/preview.php?file=fdygtmrt.png" style="height: 50px;" alt="Logo">
+                <img src="img/logo.png" style="height: 50px;" alt="Logo">
                 <div class="logo-text">
                     Unit Kegiatan Mahasiswa<br><b style="color: var(--kuning-lemon);">Majelis Al-Mustaqim</b>
                 </div>
@@ -392,7 +392,7 @@
         <div class="footer-content">
             <div class="footer-right">
                 <div class="footer-info">
-                    <a href="/dashboard"><img src="https://idweb.tech/api/preview.php?file=fdygtmrt.png" alt="Logo" style="height: 50px; margin-bottom: 10px;"></a>
+                    <a href="/dashboard"><img src="img/logo.png" alt="Logo" style="height: 50px; margin-bottom: 10px;"></a>
                 </div>
                 <div class="footer-text">
                     <p><i class='bx bxs-map kuning-ikon'></i><a href="https://maps.google.com" target="_blank" class="text-link">Jl. Dr. Soetomo No. 1, Sidakaya, Kabupaten Cilacap, Jawa Tengah 53212, Indonesia</a></p>

@@ -19,7 +19,7 @@
         width: 100%;
         height: 450px; 
         background: linear-gradient(rgba(27, 67, 20, 0.6), rgba(27, 67, 20, 0.75)), 
-                    url('https://idweb.tech/api/preview.php?file=3cxdn4s5.jpg') no-repeat center center;
+                    url('img/bg.jpg') no-repeat center center;
         background-size: cover;
         display: flex;
         align-items: center;

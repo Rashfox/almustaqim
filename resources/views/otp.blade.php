@@ -10,7 +10,7 @@
 
     .section-login {
         background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-                    url('https://www.combotour.it/public/immagini/d24/f37/web/Abu-dhabi.jpg');
+                    url('img/background.png');
         background-size: cover;
         background-position: center;
         min-height: 100vh;
