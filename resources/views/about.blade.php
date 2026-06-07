@@ -177,7 +177,7 @@
 
         <div class="about-content">
             <div class="about-image">
-                <img src="https://idweb.tech/api/preview.php?file=ewwrltjb.jpg" alt="Profil UKM Majelis Al-Mustaqim">
+                <img src="{{ asset('img/about.jpg') }}" alt="Profil UKM Majelis Al-Mustaqim">
             </div>
             <div class="about-text">
                 <h3>UKM Majelis Al-Mustaqim</h3>
