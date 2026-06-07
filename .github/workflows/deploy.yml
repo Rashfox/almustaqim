@@ -1,0 +1,44 @@
+name: Deploy Laravel to Free Hostia via FTP
+
+on:
+  push:
+    branches:
+      - main # Jalankan otomatis setiap kamu push ke branch main
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: ⚙️ Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.5' # Sesuaikan dengan versi PHP di hosting kamu
+        extensions: mbstring, xml, ctype, iconv, mysql
+
+    - name: 📦 Install Dependencies (Composer)
+      run: composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
+
+    - name: 🔑 Copy .env file
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+    - name: 📂 Sync files via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./
+        # Path tujuan sesuai yang kamu minta
+        server-dir: www/almustaqim.rash.web.id/ 
+        # File/Folder yang tidak perlu di-upload ke hosting
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/tests/**
+          .env
