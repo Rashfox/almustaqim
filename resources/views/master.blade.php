@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <link rel="icon" href="https://idweb.tech/api/preview.php?file=fdygtmrt.png" type="image/png">
+    <link rel="icon" href="img/logo.png" type="image/png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Majelis Al-Mustaqim')</title>
