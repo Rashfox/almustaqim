@@ -34,11 +34,13 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./
         # Path tujuan sesuai yang kamu minta
-        server-dir: www/almustaqim.rash.web.id/ 
+        server-dir: almustaqim.rash.web.id/ 
         # File/Folder yang tidak perlu di-upload ke hosting
         exclude: |
           **/.git*
           **/.git*/**
           **/node_modules/**
           **/tests/**
+          **/vendor/**
+          .github/**
           .env
